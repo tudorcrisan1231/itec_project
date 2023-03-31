@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LoginController;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +18,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('login');
 });
+Route::post('/login',  [LoginController::class, 'login']);
+Route::get('signout', [LoginController::class, 'signOut'])->name('signout');
+
+Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
