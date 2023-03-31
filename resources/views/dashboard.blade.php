@@ -6,6 +6,4 @@
 esti conectat in contul de admin
 @endif
 
-
-
 @endsection
