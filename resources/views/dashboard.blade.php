@@ -2,8 +2,12 @@
 
 @section('content')
 
-@if(auth()->user()->role_id == 1)
-esti conectat in contul de admin
+@if(auth()->user()->pass_change == null && auth()->user()->role_id !== 1)
+    @livewire('user-new-password')
+@elseif(auth()->user()->pass_change == 1 && auth()->user()->role_id !== 1 && auth()->user()->info==null)
+    @livewire('users-form')
+@else
+    @livewire('users-table')
 @endif
 
 @endsection

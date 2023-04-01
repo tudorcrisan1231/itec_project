@@ -6,7 +6,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Termwind\Components\Dd;
-
+use App\Mail\AddUserEmail;
+use Illuminate\Support\Facades\Mail;
 class AddUsers extends Component
 {
     public $quick_info, $email, $password, $start_date, $position,$name;
@@ -29,16 +30,25 @@ class AddUsers extends Component
             'quick_info' => $this->quick_info,
             'email' => $this->email,
             'password' => Hash::make($this->password),
-            
+            'start_date' => $this->start_date,
             'position' => $this->position,
         ]);
         // $user->save();
+        
+        $mailData = [
+            "email" =>  $this->email,
+            "password" => $this->password
+        ];
+    
+     
+        Mail::to($this->email)->send(new AddUserEmail($mailData));
         $this->name = '';
         $this->quick_info = '';
         $this->email = '';
         $this->password = '';
         $this->start_date = '';
         $this->position = '';
+
         return redirect('/dashboard');
     }
     public function render()

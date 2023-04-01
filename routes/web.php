@@ -6,7 +6,8 @@ use App\Http\Controllers\LoginController;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-
+use App\Mail\AddUserEmail;
+use Illuminate\Support\Facades\Mail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,6 +32,9 @@ Route::get('signout', [LoginController::class, 'signOut'])->name('signout');
 Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
 Route::get('/add-users',  [AddUserController::class, 'render'])->name('add-users');
+
+
+Route::get('send-email', [AddUserEmail::class, 'sendEmail']);
 
 // Route::group(['middleware' => 'auth'], function () {
 
