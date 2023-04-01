@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\MatchFound;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Termwind\Components\Dd;
 
@@ -35,14 +37,14 @@ class UsersForm extends Component
         $user->info = $user_json;
         
 
-       //match users with their buddies
-       $users = User::all();
-       $buddies = [];
-       if($user->role_id == 3){ //daca e new atunci ii cautam un mentor cu skill uri asemanatoare
+        //match users with their buddies
+        $users = User::all();
+        $buddies = [];
+        if($user->role_id == 3){ //daca e new atunci ii cautam un mentor cu skill uri asemanatoare
             $new_user_json = json_decode($user->info);
             $matches = 0;
             foreach($users as $value){
-                if($value->role_id == 2 && $value->info != null){
+                if($value->role_id == 2 && $value->info != null && $value->pause != 1){//parcurgem toti mentorii posibili
                     //verificam daca skillurile sunt asemanatoare
                     //daca sunt asemanatoare ii facem match
                     $old_user_json = json_decode($value->info);
@@ -68,26 +70,31 @@ class UsersForm extends Component
                     }
                     if($matches >= 2){
                         array_push($buddies, $value->id);
-                    }
-                    
-                }
-            }
-       }
-       if($user->role_id == 2){
-        foreach($users as $value){
-            if($value->role_id == 3){
-                if($value->buddys != null){
-                    $buddies_json = json_decode($value->buddys);
-                    foreach($buddies_json as $buddy){
-                        if($buddy == $user->id){
-                            array_push($buddies, $value->id);
+                        $mentor = User::find($value->id);
+                        if($mentor->buddys == null){
+                            $mentor->buddys = json_encode([$user->id]);
+                        } else {
+                            $mentor_buddys = json_decode($mentor->buddys);
+                            //test if the user is already in the array
+                            if(!in_array($user->id, $mentor_buddys)){
+                                array_push($mentor_buddys, $user->id);
+                                $mentor->buddys = json_encode($mentor_buddys);
+                            }   
                         }
+                        $mentor->save();
+
+                        $mailData = [
+                            "mentor" =>  $value->name,
+                            "employee" => $user->name
+                        ];
+                        //get manager email
+                        $manager = User::where('role_id', 1)->first();
+                        Mail::to($manager->email)->send(new MatchFound($mailData));  //to manager(pt ca nu pot face multe requesturi la mailtrap deodata)
                     }
                 }
-
             }
         }
-       }
+   
        $user->buddys = json_encode($buddies);
 
        $user->save();

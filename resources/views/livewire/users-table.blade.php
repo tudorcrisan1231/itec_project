@@ -42,82 +42,90 @@
         </thead>
         <tbody>
             @if($users)
-            @foreach ($users as $user)
-                @php
-                    $start_date = strtotime($user->start_date);
-                    $now = time();
-                    $years = date('Y', $now) - date('Y', $start_date);
+                @foreach ($users as $user)
+                    @php
+                        $start_date = strtotime($user->start_date);
+                        $now = time();
+                        $years = date('Y', $now) - date('Y', $start_date);
 
-                    if($years <= 1){
-                        $role_id = "New";
-                    } else {
-                        $role_id = "Old";
-                    }
-                @endphp
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    @if($edit_user == $user->id)
-                        
-                        <th scope="col" class="px-6 py-3">
-                            {{$role_id}}
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            <input type="text" wire:model="edit_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            <input type="text"  wire:model="edit_email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            <input type="text"  wire:model="edit_quick_info" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            <input type="text"  wire:model="edit_position" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        </th>
-                        
-                        <th scope="col" class="px-6 py-3">
-                            @if(auth()->user()->role_id == 1)
-                            <input type="date" wire:model="edit_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            @else
-                            {{$user->start_date}} ({{$years}} years)
-                            @endif
-                        </th>
-
-                        <td class="px-6 py-4 text-right">
-                            <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline mr-2" wire:click="cancelEdit()">Cancel</a>
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline" wire:click="saveUser({{$user->id}})">Save</a>
-                        </td>
-                    @else
-                        <th scope="col" class="px-6 py-3">
-                            {{$role_id}}
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            {{$user->name}}
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            {{$user->email}}
-                        </th>
-                        <th scope="col" class="px-6 py-3 flex items-center">
-                            <div>{{$user->quick_info}}</div>
+                        if($years <= 1){
+                            $role_id = "New";
+                        } else {
+                            $role_id = "Old";
+                        }
+                    @endphp
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        @if($edit_user == $user->id)
                             
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            {{$user->position}}
-                        </th>
-                        
-                        <th scope="col" class="px-6 py-3">
-                            {{$user->start_date}} ({{$years}} years)
-                        </th>
+                            <th scope="col" class="px-6 py-3">
+                                {{$role_id}}
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                <input type="text" wire:model="edit_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                <input type="text"  wire:model="edit_email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                <input type="text"  wire:model="edit_quick_info" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                @if(auth()->user()->role_id != 2 )
+                                    <input type="text"  wire:model="edit_position" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                @else
+                                    {{$user->position}}
+                                @endif
+                            </th>
+                            
+                            <th scope="col" class="px-6 py-3">
+                                @if(auth()->user()->role_id == 1)
+                                <input type="date" wire:model="edit_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                @else
+                                {{$user->start_date}} ({{$years}} years)
+                                @endif
+                            </th>
 
-                        <td class="px-6 py-4 text-right">
-                            @if(auth()->user()->role_id == 1)
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"  wire:click="editUser({{$user->id}})" >Edit</a>
-                            @endif
-                        </td>
-                    @endif
+                            <td class="px-6 py-4 text-right">
+                                <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline mr-2" wire:click="cancelEdit()">Cancel</a>
+                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline" wire:click="saveUser({{$user->id}})">Save</a>
+                            </td>
+                        @else
+                            <th scope="col" class="px-6 py-3">
+                                {{$role_id}}
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                <a href="/profile/{{$user->id}}" class="underline">{{$user->name}}</a>
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                {{$user->email}}
+                            </th>
+                            <th scope="col" class="px-6 py-3 flex items-center">
+                                <div>{{$user->quick_info}}</div>
+                                
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                {{$user->position}}
+                            </th>
+                            
+                            <th scope="col" class="px-6 py-3">
+                                {{$user->start_date}} ({{$years}} years)
+                            </th>
 
-                   
-                </tr>
-                
-            @endforeach
+                            <td class="px-6 py-4 text-right">
+                                @if(auth()->user()->role_id != 3 )
+                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"  wire:click="editUser({{$user->id}})" >Edit</a>
+                                @endif
+                            </td>
+                        @endif
+                          
+                    </tr>
+                    
+                @endforeach
+                @if(count($users)==0 && auth()->user()->role_id == 3)
+                    <td colspan="7" class="px-6 py-4 text-center">
+                        <p class="text-gray-400">No mentors found, please contact your manager!</p>
+                    </td>
+                @endif
             @endif
 
         </tbody>

@@ -42,11 +42,21 @@ class UsersTable extends Component
             $this->user_type = 'Manager';
             $this->users = User::where('role_id', '!=', 1)->get();
         } else if(auth()->user()->role_id == 2){
+            
             $this->user_type = 'Old employee';
-            $this->users = User::where('role_id', '!=', 1)->where('role_id', '!=', 2)->get();
+            $current_user = User::find(auth()->user()->id);
+            $current_user_buddies = json_decode($current_user->buddys);
+
+            
+            $this->users = User::where('role_id', '!=', 1)->where('role_id', '!=', 2)->whereIn('id', $current_user_buddies)->get();
+            
 
         } else {
             $this->user_type = 'New employee';
+
+            $current_user = User::find(auth()->user()->id);
+            $current_user_buddies = json_decode($current_user->buddys);
+            $this->users =User::where('role_id', '!=', 1)->where('role_id', '!=', 3)->whereIn('id', $current_user_buddies)->get();
         }
         return view('livewire.users-table');
     }

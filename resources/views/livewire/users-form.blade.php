@@ -127,15 +127,15 @@
                 <label for="password1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Which programming lang are you confortable with?</label>
                 <div class="flex items-center">
                     <input id="checked-checkbox7_programming" type="checkbox" value="node" wire:model="back_framework" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="checked-checkbox7_programming" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Java</label>
+                    <label for="checked-checkbox7_programming" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Node.js</label>
                 </div>
                 <div class="flex items-center">
                     <input id="checked-checkbox8_programming" type="checkbox" value="django"  wire:model="back_framework" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="checked-checkbox8_programming" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Python</label>
+                    <label for="checked-checkbox8_programming" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Django</label>
                 </div>
                 <div class="flex items-center">
                     <input id="checked-checkbox9_programming" type="checkbox" value="ruby"  wire:model="back_framework" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="checked-checkbox9_programming" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Ruby</label>
+                    <label for="checked-checkbox9_programming" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Ruby on rails</label>
                 </div>
                 
                 <div class="flex items-center">
