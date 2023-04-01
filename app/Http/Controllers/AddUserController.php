@@ -8,7 +8,7 @@ class AddUserController extends Controller
 {
     //
     public function render(){
-        if(auth()->user()->role_id ==1) {
+        if(auth()->user() && auth()->user()->role_id ==1) {
             return view('add_users');
         } else {
             return abort(404);

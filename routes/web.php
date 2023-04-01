@@ -19,7 +19,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('login');
+    if(auth()->user()) {
+        return redirect('/dashboard');
+    } else {
+        return view('login');
+    }
 });
 Route::post('/login',  [LoginController::class, 'login']);
 Route::get('signout', [LoginController::class, 'signOut'])->name('signout');
@@ -27,3 +31,7 @@ Route::get('signout', [LoginController::class, 'signOut'])->name('signout');
 Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
 Route::get('/add-users',  [AddUserController::class, 'render'])->name('add-users');
+
+// Route::group(['middleware' => 'auth'], function () {
+
+// });
