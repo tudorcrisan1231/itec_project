@@ -42,12 +42,20 @@ class AddUsers extends Component
     
      
         Mail::to($this->email)->send(new AddUserEmail($mailData));
+
+
+
+
+        //empty inputs
         $this->name = '';
         $this->quick_info = '';
         $this->email = '';
         $this->password = '';
         $this->start_date = '';
         $this->position = '';
+
+
+ 
 
         return redirect('/dashboard');
     }
