@@ -49,9 +49,9 @@
                         $years = date('Y', $now) - date('Y', $start_date);
 
                         if($years <= 1){
-                            $role_id = "New";
+                            $role_id = "New employee";
                         } else {
-                            $role_id = "Old";
+                            $role_id = "Mentor";
                         }
                     @endphp
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">

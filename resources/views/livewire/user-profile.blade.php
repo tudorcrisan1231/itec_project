@@ -3,13 +3,33 @@
     <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4sxl text-center dark:text-white"><mark class="px-2 text-white bg-blue-600 rounded dark:bg-blue-500">{{$profile_data->name}}'s</mark> profile</h1>
 
     <div class="text-lg text-gray-900 dark:text-white flex items-center gap-4 mb-4">
-        <div>Email:</div>
-        <div class=" text-gray-500 dark:text-gray-400">{{$profile_data->email}}</div>
+        <div>Name:</div>
+        @if($editProfile)
+            <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Nume" required wire:model="edit_name">
+            @else
+            <div class=" text-gray-500 dark:text-gray-400">{{$profile_data->name}}</div>
+        @endif
+        
     </div>
+
+   <div class="text-lg text-gray-900 dark:text-white flex items-center gap-4 mb-4">
+        <div>Email:</div>
+        
+        @if($editProfile)
+            <input type="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Email" required wire:model="edit_email">
+            @else
+            <div class=" text-gray-500 dark:text-gray-400">{{$profile_data->email}}</div>
+        @endif
+    </div> 
 
     <div class="text-lg text-gray-900 dark:text-white flex items-center gap-4 mb-4">
         <div>Quick info:</div>
-        <div class=" text-gray-500 dark:text-gray-400">{{$profile_data->quick_info}}</div>
+        
+        @if($editProfile)
+            <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Quick info" required wire:model="edit_quickInfo">
+            @else
+            <div class=" text-gray-500 dark:text-gray-400">{{$profile_data->quick_info}}</div>
+        @endif
     </div>
 
     <div class="text-lg text-gray-900 dark:text-white flex items-center gap-4 mb-4">
@@ -67,6 +87,23 @@
             <div class=" text-gray-500 dark:text-gray-400 capitalize">{{$communication_style[(int)$extra_data['communication_style']]}}</div>
         </div>
     @endif
+
+    @if(auth()->user()->id == $profile_data->id)
+        @if($editProfile)
+            <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" wire:click="cancelEdit()">Cancel edit</button>
+            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" wire:click="saveData()">Save</button>
+            @else
+            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" wire:click="editProfile({{$profile_data->id}})">Edit basic data</button>
+        @endif
+        
+        
+
+        @if(auth()->user()->role_id == 3 )
+        <button type="button" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" wire:click="editExtraProfile({{$profile_data->id}})">Edit extra data</button>
+
+        @endif
+    @endif
+
     @if(auth()->user()->role_id == 1)
         <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" wire:click="toggleDelete">Delete user</button>
 
