@@ -1,15 +1,15 @@
 <div>
     <h3 class="text-3xl font-bold dark:text-white mb-4">{{traduceri('add_translates')}}</h3>
 
-    <div>
+    <div class="mb-3">
         <label for="key" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Key</label>
         <input type="text" id="key" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Key" required wire:model="key">
     </div> 
-    <div>
+    <div class="mb-3">
         <label for="ro" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">RO</label>
         <input type="text" id="ro" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="RO" required wire:model="ro">
     </div> 
-    <div>
+    <div class="mb-3">
         <label for="en" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">EN</label>
         <input type="text" id="en" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="EN" required wire:model="en">
     </div> 
