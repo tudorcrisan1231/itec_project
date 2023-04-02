@@ -20,8 +20,6 @@
         @livewireStyles
     </head>
     <body class="bg-white dark:bg-gray-600">
-
-
         <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
             <div class="px-3 py-3 lg:px-5 lg:pl-3">
               <div class="flex items-center justify-between">
@@ -38,6 +36,13 @@
                   </a>
                 </div>
                 <div class="flex items-center">
+                 
+                    <a href="{{route('setLang', ['ro'])}}" @if(getLang() == 'ro') class="px-2 text-white bg-blue-600 rounded dark:bg-blue-500 mr-2 pointer-events-none" @else  class="px-2 text-white border-blue-600 rounded border dark:border-blue-500 cursor-pointer mr-2" @endif>
+                      RO
+                    </a>
+                    <a href="{{route('setLang', ['en'])}}"  @if(getLang() == 'en') class="px-2 text-white bg-blue-600 rounded dark:bg-blue-500 pointer-events-none" @else  class="px-2 text-white border-blue-600 rounded border dark:border-blue-500 cursor-pointer" @endif>
+                      EN
+                    </a>
                     <div class="flex items-center ml-3">
                       <div>
                         <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
@@ -57,10 +62,10 @@
                         <ul class="py-1" role="none">
                         
                           <li>
-                            <a href="/profile/{{auth()->user()->id}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Profile</a>
+                            <a href="/profile/{{auth()->user()->id}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem"> {{traduceri('profile')}}</a>
                           </li>
                           <li>
-                            <a href="{{ route('signout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
+                            <a href="{{ route('signout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">{{traduceri('Sign_out')}}</a>
                           </li>
                         </ul>
                       </div>
@@ -76,7 +81,7 @@
                    <li>
                       <a href="{{route('dashboard')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                          <svg aria-hidden="true" class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
-                         <span class="ml-3">Dashboard</span>
+                         <span class="ml-3">{{traduceri('dashboard')}}</span>
                       </a>
                    </li>
                    
@@ -88,15 +93,25 @@
                           <svg fill="none" stroke="currentColor" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"></path>
                           </svg>
-                          <span class="flex-1 ml-3 whitespace-nowrap">Employee's matches</span>
+                          
+                          <span class="flex-1 ml-3 whitespace-nowrap">{{traduceri('employee_matches')}}</span>
                       </a>
                   </li>
-                   <li>
-                      <a href="{{route('add-users')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                         <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
-                         <span class="flex-1 ml-3 whitespace-nowrap">Add Users</span>
+                  <li>
+                    <a href="{{route('add-users')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                        <span class="flex-1 ml-3 whitespace-nowrap">{{traduceri('add_users')}}</span>
+                    </a>
+                  </li>
+                  <li>
+                      <a href="/add-translates" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        
+                        <svg fill="none" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"  stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"></path>
+                        </svg>
+                        <span class="flex-1 ml-3 whitespace-nowrap">{{traduceri('add_translates')}}</span>
                       </a>
-                   </li>
+                  </li>
                    @endif
                 </ul>
              </div>

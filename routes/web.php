@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddTranslate;
 use App\Http\Controllers\AddUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeMatches;
@@ -41,6 +42,15 @@ Route::get('/profile/{id}',  [UserProfile::class, 'render'])->name('profile.id')
 
 Route::get('send-email', [AddUserEmail::class, 'sendEmail']);
 Route::get('match-found', [MatchFound::class, 'sendEmail']);
+
+
+Route::get('/setLang/{lang}', function ($lang) {
+    setLang($lang);
+    
+    return redirect()->back();
+})->name('setLang');
+
+Route::get('/add-translates',  [AddTranslate::class, 'render'])->name('add-translates');
 
 // Route::group(['middleware' => 'auth'], function () {
 
