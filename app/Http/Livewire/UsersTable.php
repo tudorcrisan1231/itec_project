@@ -36,6 +36,10 @@ class UsersTable extends Component
         $this->edit_user = null;
     }
 
+    public function openChat($sender_id, $receiver_id){
+        dd($sender_id, $receiver_id);
+    }
+
     public function render()
     {
         if(auth()->user()->role_id == 1){

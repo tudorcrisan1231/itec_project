@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('username')->unique();
-            $table->integer('role_id')->default(1); //1 admin, 2 old user, 3 new user
+            $table->integer('role_id')->default(1); //1 admin, 2 old user, 3 new user, 4 spectator
             $table->text('info')->default(null);
             $table->string('name');
             $table->string('email')->unique();
