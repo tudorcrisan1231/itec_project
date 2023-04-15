@@ -8,7 +8,26 @@ use Termwind\Components\Dd;
 
 class UsersTable extends Component
 {
-    public $user_type, $users, $edit_user, $edit_name, $edit_quick_info, $edit_email, $edit_date, $edit_position;
+    public $user_type, $users, $edit_user, $edit_name, $edit_quick_info, $edit_email, $edit_date, $edit_position, $message, $receiver_id = null, $sender_id = null, $receiver, $sender;
+
+
+    public function openChat($sender_id, $receiver_id){
+        $this->sender_id = $sender_id;
+        $this->receiver_id = $receiver_id;
+        $this->message = '';
+
+        $this->receiver = User::find($receiver_id);
+        // $this->sender = User::find($sender_id);
+    }
+    public function closeChat(){
+        $this->sender_id = null;
+        $this->receiver_id = null;
+    }
+
+    public function sendMessage(){
+        dd($this->sender_id, $this->receiver_id);
+    }
+
 
     public function editUser($id){
         $this->edit_user = $id;
@@ -36,9 +55,7 @@ class UsersTable extends Component
         $this->edit_user = null;
     }
 
-    public function openChat($sender_id, $receiver_id){
-        dd($sender_id, $receiver_id);
-    }
+
 
     public function render()
     {
