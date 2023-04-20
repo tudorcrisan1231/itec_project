@@ -2,13 +2,15 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Chats;
 use App\Models\User;
 use Livewire\Component;
 use Termwind\Components\Dd;
 
+
 class UsersTable extends Component
 {
-    public $user_type, $users, $edit_user, $edit_name, $edit_quick_info, $edit_email, $edit_date, $edit_position, $message, $receiver_id = null, $sender_id = null, $receiver, $sender;
+    public $user_type, $users, $edit_user, $edit_name, $edit_quick_info, $edit_email, $edit_date, $edit_position, $message, $receiver_id = null, $sender_id = null, $receiver, $sender, $chat;
 
 
     public function openChat($sender_id, $receiver_id){
@@ -17,6 +19,10 @@ class UsersTable extends Component
         $this->message = '';
 
         $this->receiver = User::find($receiver_id);
+
+        $chat1 = Chats::where('sender_id', $sender_id)->where('receiver_id', $receiver_id)->first();
+        $chat2 = Chats::where('sender_id', $receiver_id)->where('receiver_id', $sender_id)->first();
+        $this->chat = $chat1 ?? $chat2;
         // $this->sender = User::find($sender_id);
     }
     public function closeChat(){
@@ -25,7 +31,42 @@ class UsersTable extends Component
     }
 
     public function sendMessage(){
-        dd($this->sender_id, $this->receiver_id);
+        //find existing chat
+        $chat1 = Chats::where('sender_id', $this->sender_id)->where('receiver_id', $this->receiver_id)->first();
+        $chat2 = Chats::where('sender_id', $this->receiver_id)->where('receiver_id', $this->sender_id)->first();
+        $chat = $chat1 ?? $chat2;
+        if($chat){
+            //push new message format 
+            $mesaj_current = json_decode($chat->messages);
+          
+            array_push($mesaj_current, [
+                'sender_id' => $this->sender_id,
+                'receiver_id' => $this->receiver_id,
+                'message' => $this->message,
+                'time' => date("d-m-Y h:i:s"),
+            ]);
+            $chat->messages = json_encode($mesaj_current);
+            $chat->save();
+        } else {
+            $chat = new Chats();
+            $chat->sender_id = $this->sender_id;
+            $chat->receiver_id = $this->receiver_id;
+            $mesaj = [
+                [
+                    'sender_id' => $this->sender_id,
+                    'receiver_id' => $this->receiver_id,
+                    'message' => $this->message,
+                    'time' => date("d-m-Y h:i:s"),
+                ]
+            ];
+            $chat->messages = json_encode($mesaj);
+            $chat->save();
+        }
+
+        $this->message = '';
+        $chat1 = Chats::where('sender_id', $this->sender_id)->where('receiver_id', $this->receiver_id)->first();
+        $chat2 = Chats::where('sender_id', $this->receiver_id)->where('receiver_id', $this->sender_id)->first();
+        $this->chat = $chat1 ?? $chat2;
     }
 
 

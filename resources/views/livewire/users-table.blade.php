@@ -142,53 +142,31 @@
         </div>
 
         <div class="overflow-auto" style="height: 17.5rem;">
-            <div class="flex items-start gap-2 p-2">
-                <img class="w-7 h-7 rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwVLdSDmgrZN7TkzbHJb8dD0_7ASUQuERL2A&usqp=CAU" alt="Rounded avatar">
-                <div>
-                    <div>
-                        <span class="font-bold">Tudor Crisan</span> (12.12.2022)
+            @isset($chat->messages)
+                @php
+                    $chat_messages = json_decode($chat->messages);
+                @endphp
+                @foreach ($chat_messages as $item)
+                    <div class="flex items-start gap-2 p-2 @if($item->sender_id == auth()->user()->id) flex-row-reverse text-right @endif">
+                        <img class="w-7 h-7 rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwVLdSDmgrZN7TkzbHJb8dD0_7ASUQuERL2A&usqp=CAU" alt="Rounded avatar">
+                        <div>
+                            <div>
+                                <span class="font-bold">
+                                @if($item->sender_id == auth()->user()->id)
+                                    Me
+                                @else
+                                    {{$receiver->name}}
+                                @endif
+                                </span> ({{$item->time}})
+                            </div>
+                            <div>
+                                {{$item->message}}
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora, debitis! Perferendis, sed facere commodi est vel voluptatum maxime ullam aperiam ad corporis, eaque ex voluptatibus laborum consequatur veritatis, suscipit natus?
-                    </div>
-                </div>
-            </div>
-    
-            <div class="flex items-start gap-2 p-2 flex-row-reverse text-right">
-                <img class="w-7 h-7 rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwVLdSDmgrZN7TkzbHJb8dD0_7ASUQuERL2A&usqp=CAU" alt="Rounded avatar">
-                <div>
-                    <div>
-                        <span class="font-bold">Me</span> (12.12.2022)
-                    </div>
-                    <div>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora, debitis! Perferendis, sed facere commodi est vel voluptatum maxime ullam aperiam ad corporis, eaque ex voluptatibus laborum consequatur veritatis, suscipit natus?
-                    </div>
-                </div>
-            </div>
-    
-            <div class="flex items-start gap-2 p-2 flex-row-reverse text-right">
-                <img class="w-7 h-7 rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwVLdSDmgrZN7TkzbHJb8dD0_7ASUQuERL2A&usqp=CAU" alt="Rounded avatar">
-                <div>
-                    <div>
-                        <span class="font-bold">Me</span> (12.12.2022)
-                    </div>
-                    <div>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora, debitis! Perferendis, sed facere commodi est vel voluptatum maxime ullam aperiam ad corporis, eaque ex voluptatibus laborum consequatur veritatis, suscipit natus?
-                    </div>
-                </div>
-            </div>
-    
-            <div class="flex items-start gap-2 p-2 flex-row-reverse text-right">
-                <img class="w-7 h-7 rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwVLdSDmgrZN7TkzbHJb8dD0_7ASUQuERL2A&usqp=CAU" alt="Rounded avatar">
-                <div>
-                    <div>
-                        <span class="font-bold">Me</span> (12.12.2022)
-                    </div>
-                    <div>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora, debitis! Perferendis, sed facere commodi est vel voluptatum maxime ullam aperiam ad corporis, eaque ex voluptatibus laborum consequatur veritatis, suscipit natus? 123
-                    </div>
-                </div>
-            </div>
+                @endforeach
+            @endisset
+
         </div>
 
 
