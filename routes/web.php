@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Mail\AddUserEmail;
 use App\Mail\MatchFound;
 use Illuminate\Support\Facades\Mail;
-
+use App\Http\Controllers\NotificationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,6 +51,10 @@ Route::get('/setLang/{lang}', function ($lang) {
 })->name('setLang');
 
 Route::get('/add-translates',  [AddTranslate::class, 'render'])->name('add-translates');
+
+Route::get('/notification',  [NotificationController::class, 'render'])->name('notification');
+
+
 
 // Route::group(['middleware' => 'auth'], function () {
 

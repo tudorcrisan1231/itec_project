@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Chats;
+use App\Models\Notification;
 use App\Models\User;
 use Livewire\Component;
 use Termwind\Components\Dd;
@@ -62,6 +63,14 @@ class UsersTable extends Component
             $chat->messages = json_encode($mesaj);
             $chat->save();
         }
+
+        $notification = new Notification();
+        $notification->type = 'chat';
+        $notification->sender_id = $this->sender_id;
+        $notification->receiver_id = json_encode([$this->receiver_id]);
+        $notification->message = 'new_message'; //cheie de traducere
+        $notification->data = date("d-m-Y h:i:s");
+        $notification->save();
 
         $this->message = '';
         $chat1 = Chats::where('sender_id', $this->sender_id)->where('receiver_id', $this->receiver_id)->first();
