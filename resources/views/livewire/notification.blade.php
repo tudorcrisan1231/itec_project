@@ -22,24 +22,33 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($notifications as $item)
-                
+                @if(count($notifications) > 0)
+                    @foreach ($notifications as $item)
+                    
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{traduceri($item->message)}}
+                            </th>
+                            <td class="px-6 py-4">
+                                {{App\Models\User::find($item->sender_id)->name}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{$item->data}}
+                            </td>
+                        
+                            <td class="px-6 py-4 text-right">
+                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline" wire:click="markRead({{$item->id}})">Mark as read</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{traduceri($item->message)}}
+                        <th scope="row" colspan="4" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            Nu aveti notificari
                         </th>
-                        <td class="px-6 py-4">
-                            {{App\Models\User::find($item->sender_id)->name}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{$item->data}}
-                        </td>
-                     
-                        <td class="px-6 py-4 text-right">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Mark as read</a>
-                        </td>
                     </tr>
-                @endforeach
+                @endif
+
             </tbody>
         </table>
     </div>

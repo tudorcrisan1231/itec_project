@@ -16,4 +16,10 @@ class Notification extends Component
 
         return view('livewire.notification');
     }
+
+    public function markRead($id){
+        $notification = ModelsNotification::find($id);
+        $notification->status = 1;
+        $notification->save();
+    }
 }
