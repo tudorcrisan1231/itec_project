@@ -14,14 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('notifications', function (Blueprint $table) {
-         
-            $table->string('type');
-            $table->string('sender_id');
-            $table->string('receiver_id');
-            $table->string('message');
-            $table->string('extra_data');
-            $table->text('data');
-       
+            //
+            $table->integer('status')->default(0); // 0 = unread, 1 = read
         });
     }
 
@@ -33,7 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('notifications', function (Blueprint $table) {
-            Schema::dropIfExists('notifications');
+            //
         });
     }
 };

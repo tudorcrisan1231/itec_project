@@ -2,6 +2,6 @@
 
 @section('content')
 
-notificari
+@livewire('notification')
     
 @endsection
