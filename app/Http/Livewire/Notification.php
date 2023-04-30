@@ -21,5 +21,7 @@ class Notification extends Component
         $notification = ModelsNotification::find($id);
         $notification->status = 1;
         $notification->save();
+
+        $this->emit('notificationMarkedRead');
     }
 }

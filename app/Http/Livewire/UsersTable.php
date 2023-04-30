@@ -11,7 +11,7 @@ use Termwind\Components\Dd;
 
 class UsersTable extends Component
 {
-    public $user_type, $users, $edit_user, $edit_name, $edit_quick_info, $edit_email, $edit_date, $edit_position, $message, $receiver_id = null, $sender_id = null, $receiver, $sender, $chat;
+    public $user_type, $users, $edit_user, $edit_name, $edit_quick_info, $edit_email, $edit_date, $edit_position, $message, $receiver_id = null, $sender_id = null, $receiver, $sender, $chat, $notifications_count = [];
 
 
     public function openChat($sender_id, $receiver_id){
@@ -25,6 +25,13 @@ class UsersTable extends Component
         $chat2 = Chats::where('sender_id', $receiver_id)->where('receiver_id', $sender_id)->first();
         $this->chat = $chat1 ?? $chat2;
         // $this->sender = User::find($sender_id);
+
+        $notification = Notification::where('sender_id', $receiver_id)->where('status', 0)->get();
+        foreach($notification as $n){
+            $n->status = 1;
+            $n->save();
+        }
+        $this->emit('notificationMarkedRead');
     }
     public function closeChat(){
         $this->sender_id = null;
@@ -120,7 +127,10 @@ class UsersTable extends Component
 
             
             $this->users = User::where('role_id', '!=', 1)->where('role_id', '!=', 2)->whereIn('id', $current_user_buddies)->get();
-            
+
+            foreach($this->users as $user){
+                $this->notifications_count[$user->id] = Notification::where('sender_id', $user->id)->where('status', 0)->count();
+            }
 
         } else {
             $this->user_type = 'New employee';
@@ -128,6 +138,10 @@ class UsersTable extends Component
             $current_user = User::find(auth()->user()->id);
             $current_user_buddies = json_decode($current_user->buddys);
             $this->users =User::where('role_id', '!=', 1)->where('role_id', '!=', 3)->whereIn('id', $current_user_buddies)->get();
+
+            foreach($this->users as $user){
+                $this->notifications_count[$user->id] = Notification::where('sender_id', $user->id)->where('status', 0)->count();
+            }
         }
         return view('livewire.users-table');
     }
