@@ -26,7 +26,7 @@ class UsersTable extends Component
         $this->chat = $chat1 ?? $chat2;
         // $this->sender = User::find($sender_id);
 
-        $notification = Notification::where('sender_id', $receiver_id)->where('status', 0)->get();
+        $notification = Notification::where('sender_id', $receiver_id)->whereJsonContains('receiver_id', auth()->user()->id)->where('status', 0)->get();
         foreach($notification as $n){
             $n->status = 1;
             $n->save();
@@ -119,17 +119,24 @@ class UsersTable extends Component
         if(auth()->user()->role_id == 1){
             $this->user_type = 'Manager';
             $this->users = User::where('role_id', '!=', 1)->get();
+            foreach($this->users as $user){
+                $this->notifications_count[$user->id] = Notification::where('sender_id', $user->id)->whereJsonContains('receiver_id', auth()->user()->id)->where('status', 0)->count();
+            }
+
         } else if(auth()->user()->role_id == 2){
             
             $this->user_type = 'Old employee';
             $current_user = User::find(auth()->user()->id);
             $current_user_buddies = json_decode($current_user->buddys);
 
-            
+            $managers = User::where('role_id', 1)->get();
             $this->users = User::where('role_id', '!=', 1)->where('role_id', '!=', 2)->whereIn('id', $current_user_buddies)->get();
 
+            
+            $this->users = $managers->merge($this->users);
+
             foreach($this->users as $user){
-                $this->notifications_count[$user->id] = Notification::where('sender_id', $user->id)->where('status', 0)->count();
+                $this->notifications_count[$user->id] = Notification::where('sender_id', $user->id)->whereJsonContains('receiver_id', auth()->user()->id)->where('status', 0)->count();
             }
 
         } else {
@@ -137,10 +144,16 @@ class UsersTable extends Component
 
             $current_user = User::find(auth()->user()->id);
             $current_user_buddies = json_decode($current_user->buddys);
+
+            $managers = User::where('role_id', 1)->get();
+
             $this->users =User::where('role_id', '!=', 1)->where('role_id', '!=', 3)->whereIn('id', $current_user_buddies)->get();
 
+            
+            $this->users = $managers->merge($this->users);
+
             foreach($this->users as $user){
-                $this->notifications_count[$user->id] = Notification::where('sender_id', $user->id)->where('status', 0)->count();
+                $this->notifications_count[$user->id] = Notification::where('sender_id', $user->id)->whereJsonContains('receiver_id', auth()->user()->id)->where('status', 0)->count();
             }
         }
         return view('livewire.users-table');

@@ -53,12 +53,18 @@
                         } else {
                             $role_id = "Mentor";
                         }
+                        
                     @endphp
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 @if($user->role_id == 1) text-red-900 @endif">
                         @if($edit_user == $user->id)
                             
                             <th scope="col" class="px-6 py-3">
-                                {{$role_id}}
+                                @if($user->role_id == 1)
+                                    Manager
+                                @else
+                                    {{$role_id}}
+                                @endif
+                                
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 <input type="text" wire:model="edit_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
@@ -114,16 +120,17 @@
                             <td class="px-6 py-4 text-right flex items-center justify-end ">
                                 <div class="relative">
                                     <svg wire:click="openChat({{auth()->user()->id}}, {{$user->id}})" style="width: 20px; height:20px;" class="mr-3 cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><path fill="currentColor" d="M140 128a12 12 0 1 1-12-12a12 12 0 0 1 12 12Zm-56-12a12 12 0 1 0 12 12a12 12 0 0 0-12-12Zm88 0a12 12 0 1 0 12 12a12 12 0 0 0-12-12Zm60 12a104 104 0 0 1-152.88 91.82l-34.05 11.35a16 16 0 0 1-20.24-20.24l11.35-34.05A104 104 0 1 1 232 128Zm-16 0a88 88 0 1 0-164.19 44.06a8 8 0 0 1 .66 6.54L40 216l37.4-12.47a7.85 7.85 0 0 1 2.53-.42a8 8 0 0 1 4 1.08A88 88 0 0 0 216 128Z"/></svg>
-
-                                    @if($notifications_count[$user->id] > 0)
-                                        <div class="absolute  top-[-8px] right-1 inline-flex items-center justify-center w-3 h-3 p-2 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                                            {{ $notifications_count[$user->id]}}
-                                        </div>
-                                    @endif
+                                    @isset($notifications_count[$user->id])
+                                        @if($notifications_count[$user->id] > 0)
+                                            <div class="absolute  top-[-8px] right-1 inline-flex items-center justify-center w-3 h-3 p-2 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                                                {{ $notifications_count[$user->id]}}
+                                            </div>
+                                        @endif
+                                    @endisset
                                 </div>
    
 
-                                @if(auth()->user()->role_id != 3 )
+                                @if(auth()->user()->role_id != 3 && $user->role_id != 1)
                                     <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"  wire:click="editUser({{$user->id}})" >Edit</a>
                                 @endif
                             </td>

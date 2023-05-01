@@ -37,10 +37,10 @@
                 </div>
                 <div class="flex items-center">
                  
-                    <a href="{{route('setLang', ['ro'])}}" @if(getLang() == 'ro') class="px-2 text-white bg-blue-600 rounded dark:bg-blue-500 mr-2 pointer-events-none" @else  class="px-2 text-white border-blue-600 rounded border dark:border-blue-500 cursor-pointer mr-2" @endif>
+                    <a href="{{route('setLang', ['ro'])}}" @if(getLang() == 'ro') class="px-2 text-white bg-blue-600 rounded dark:bg-blue-500 mr-2 pointer-events-none" @else  class="px-2 text-blue-600 border-blue-600 dark:text-white rounded border dark:border-blue-500 cursor-pointer mr-2" @endif>
                       RO
                     </a>
-                    <a href="{{route('setLang', ['en'])}}"  @if(getLang() == 'en') class="px-2 text-white bg-blue-600 rounded dark:bg-blue-500 pointer-events-none" @else  class="px-2 text-white border-blue-600 rounded border dark:border-blue-500 cursor-pointer" @endif>
+                    <a href="{{route('setLang', ['en'])}}"  @if(getLang() == 'en') class="px-2 text-white bg-blue-600 rounded dark:bg-blue-500 pointer-events-none" @else  class="px-2 text-blue-600 border-blue-600 dark:text-white rounded border dark:border-blue-500 cursor-pointer" @endif>
                       EN
                     </a>
                     <div class="flex items-center ml-3">
